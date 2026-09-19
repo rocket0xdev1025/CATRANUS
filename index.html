@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CATRANUS | $CATRANUS — Wild Feline Energy on Solana</title>
+  <meta name="description" content="CATRANUS brings wild feline energy to Solana, unleashing viral memes and moonbound chaos." />
+  <link rel="icon" href="logo.png" type="image/png" />
+  <meta property="og:title" content="CATRANUS | $CATRANUS" />
+  <meta property="og:description" content="CATRANUS brings wild feline energy to Solana, unleashing viral memes and moonbound chaos." />
+  <meta property="og:image" content="banner.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            neon: "#c8ff3d",
+            glow: "#39ff14",
+            lime: "#b6ff2a",
+            moon: "#9ee8f0",
+            ice: "#7ec8d4",
+            void: "#03140a",
+            moss: "#062014",
+          },
+          fontFamily: {
+            display: ["Orbitron", "sans-serif"],
+            body: ["Rajdhani", "sans-serif"],
+          },
+          dropShadow: {
+            neon: "0 0 18px rgba(57,255,20,0.85)",
+            moon: "0 0 24px rgba(158,232,240,0.55)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      --neon: #c8ff3d;
+      --glow: #39ff14;
+      --moon: #9ee8f0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Rajdhani", sans-serif;
+      background: #021208;
+      color: #e8ffe0;
+      overflow-x: hidden;
+    }
+
+    .starfield {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(57, 255, 20, 0.18), transparent 55%),
+        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(126, 200, 212, 0.12), transparent 50%),
+        radial-gradient(ellipse 40% 50% at 10% 70%, rgba(57, 255, 20, 0.1), transparent 50%),
+        radial-gradient(circle at 50% 100%, rgba(6, 40, 18, 0.9), #021208 70%),
+        #021208;
+    }
+
+    .stars,
+    .stars2,
+    .stars3 {
+      position: absolute;
+      inset: 0;
+      background-repeat: repeat;
+    }
+
+    .stars {
+      background-image: radial-gradient(1.5px 1.5px at 20px 30px, #c8ff3d, transparent),
+        radial-gradient(1px 1px at 80px 120px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 160px 70px, #9ee8f0, transparent),
+        radial-gradient(1px 1px at 240px 180px, #c8ff3d, transparent),
+        radial-gradient(2px 2px at 320px 40px, #fff, transparent),
+        radial-gradient(1px 1px at 400px 150px, #9ee8f0, transparent);
+      background-size: 480px 220px;
+      animation: drift 90s linear infinite;
+      opacity: 0.7;
+    }
+
+    .stars2 {
+      background-image: radial-gradient(1px 1px at 50px 90px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 140px 20px, #c8ff3d, transparent),
+        radial-gradient(1px 1px at 280px 140px, #9ee8f0, transparent);
+      background-size: 360px 180px;
+      animation: drift 140s linear infinite reverse;
+      opacity: 0.5;
+    }
+
+    .stars3 {
+      background-image: radial-gradient(2px 2px at 100px 60px, rgba(200, 255, 61, 0.9), transparent),
+        radial-gradient(1px 1px at 200px 160px, #fff, transparent);
+      background-size: 280px 200px;
+      animation: twinkle 4s ease-in-out infinite alternate;
+      opacity: 0.8;
+    }
+
+    @keyframes drift {
+      from { background-position: 0 0; }
+      to { background-position: -480px 220px; }
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.35; }
+      to { opacity: 0.9; }
+    }
+
+    .moon-orb {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 32% 28%, #d6f7fb 0%, #8fd4e0 22%, #3d8a96 48%, #0a2a22 72%, #03140a 100%);
+      box-shadow:
+        0 0 80px 20px rgba(57, 255, 20, 0.25),
+        0 0 180px 50px rgba(126, 200, 212, 0.18),
+        inset -40px -20px 80px rgba(2, 18, 8, 0.55);
+      filter: saturate(1.1);
+    }
+
+    .moon-ring {
+      position: absolute;
+      width: 780px;
+      height: 180px;
+      border: 2px solid rgba(200, 255, 61, 0.35);
+      border-radius: 50%;
+      box-shadow:
+        0 0 18px rgba(57, 255, 20, 0.4),
+        inset 0 0 18px rgba(158, 232, 240, 0.2);
+      transform: rotate(-18deg);
+      animation: ring-spin 28s linear infinite;
+    }
+
+    .moon-ring::after {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(158, 232, 240, 0.25);
+      border-radius: 50%;
+    }
+
+    @keyframes ring-spin {
+      from { transform: rotate(-18deg) rotateY(0deg); }
+      to { transform: rotate(-18deg) rotateY(360deg); }
+    }
+
+    .logo-aura {
+      filter: drop-shadow(0 0 18px rgba(57, 255, 20, 0.85)) drop-shadow(0 0 48px rgba(57, 255, 20, 0.45));
+      animation: aura 3.2s ease-in-out infinite;
+    }
+
+    @keyframes aura {
+      0%, 100% { filter: drop-shadow(0 0 16px rgba(57, 255, 20, 0.7)) drop-shadow(0 0 40px rgba(57, 255, 20, 0.35)); }
+      50% { filter: drop-shadow(0 0 28px rgba(57, 255, 20, 1)) drop-shadow(0 0 70px rgba(57, 255, 20, 0.55)); }
+    }
+
+    .title-glow {
+      color: #06150c;
+      -webkit-text-stroke: 2px #c8ff3d;
+      text-shadow:
+        0 0 12px rgba(57, 255, 20, 0.95),
+        0 0 32px rgba(57, 255, 20, 0.65),
+        0 0 64px rgba(57, 255, 20, 0.35);
+    }
+
+    .glass {
+      background: linear-gradient(180deg, rgba(8, 40, 18, 0.72), rgba(3, 20, 10, 0.85));
+      border: 1px solid rgba(200, 255, 61, 0.28);
+      box-shadow:
+        0 0 0 1px rgba(57, 255, 20, 0.08),
+        0 10px 40px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(200, 255, 61, 0.12);
+      backdrop-filter: blur(16px);
+    }
+
+    .neon-btn {
+      background: linear-gradient(180deg, #d4ff5a 0%, #9dff14 45%, #5ad400 100%);
+      color: #05210c;
+      box-shadow:
+        0 0 18px rgba(57, 255, 20, 0.7),
+        0 8px 24px rgba(57, 255, 20, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .neon-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow:
+        0 0 28px rgba(57, 255, 20, 0.95),
+        0 12px 32px rgba(57, 255, 20, 0.4);
+    }
+
+    .moon-btn {
+      background: linear-gradient(180deg, rgba(158, 232, 240, 0.18), rgba(8, 40, 18, 0.6));
+      border: 1px solid rgba(158, 232, 240, 0.55);
+      color: #d6f7fb;
+      box-shadow: 0 0 18px rgba(126, 200, 212, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .moon-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 28px rgba(158, 232, 240, 0.5);
+    }
+
+    .ticker {
+      animation: ticker 28s linear infinite;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .step-num {
+      background: radial-gradient(circle at 30% 30%, #e8ff8a, #9dff14 45%, #3d9a00);
+      color: #05210c;
+      box-shadow: 0 0 22px rgba(57, 255, 20, 0.55);
+    }
+
+    .copy-ok {
+      animation: pop 0.35s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.92); }
+      50% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+
+    .nav-blur {
+      background: rgba(2, 18, 8, 0.72);
+      border-bottom: 1px solid rgba(200, 255, 61, 0.18);
+      backdrop-filter: blur(18px);
+    }
+
+    iframe {
+      background: #03140a;
+    }
+  </style>
+</head>
+<body class="font-body antialiased">
+  <div class="starfield" aria-hidden="true">
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+  </div>
+
+  <div class="relative z-10">
+    <header class="nav-blur sticky top-0 z-50">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
+        <a href="#top" class="flex items-center gap-3">
+          <img src="logo.png" alt="CATRANUS logo" class="h-12 w-12 rounded-full logo-aura object-cover" />
+          <div>
+            <p class="font-display text-lg font-extrabold tracking-[0.22em] text-neon drop-shadow-neon">CATRANUS</p>
+            <p class="text-xs tracking-[0.3em] text-moon/80">$CATRANUS</p>
+          </div>
+        </a>
+
+        <nav class="hidden items-center gap-7 text-sm font-semibold tracking-[0.18em] uppercase text-lime/90 md:flex">
+          <a href="#about" class="hover:text-neon">Lore</a>
+          <a href="#buy" class="hover:text-neon">How to Buy</a>
+          <a href="#chart" class="hover:text-neon">Chart</a>
+          <a href="#community" class="hover:text-neon">Pack</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <a href="https://t.me/CATRANUSsol" target="_blank" rel="noopener noreferrer" class="overflow-hidden rounded-full ring-1 ring-neon/40 transition hover:ring-neon hover:drop-shadow-neon">
+            <img src="tg.png" alt="Telegram" class="h-9 w-9 object-cover" />
+          </a>
+          <a href="https://x.com/CATRANUSsol" target="_blank" rel="noopener noreferrer" class="overflow-hidden rounded-full ring-1 ring-neon/40 transition hover:ring-neon hover:drop-shadow-neon">
+            <img src="x.png" alt="X / Twitter" class="h-9 w-9 object-cover" />
+          </a>
+          <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=TBA" target="_blank" rel="noopener noreferrer" class="neon-btn hidden rounded-full px-5 py-2 font-display text-xs font-extrabold tracking-[0.18em] uppercase sm:inline-flex">
+            Buy Now
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <section id="top" class="relative overflow-hidden">
+      <div class="absolute inset-0">
+        <img src="banner.jpg" alt="" class="h-full w-full object-cover opacity-55" />
+        <div class="absolute inset-0 bg-gradient-to-b from-[#021208]/40 via-[#021208]/70 to-[#021208]"></div>
+      </div>
+
+      <div class="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-12 lg:grid-cols-2 lg:pt-16">
+        <div class="relative mx-auto flex h-[420px] w-full max-w-[520px] items-center justify-center lg:h-[540px]">
+          <div class="moon-orb opacity-80"></div>
+          <div class="moon-ring"></div>
+          <img src="logo.png" alt="CATRANUS glowing cat" class="relative z-10 w-[78%] max-w-md logo-aura" />
+        </div>
+
+        <div class="text-center lg:text-left">
+          <p class="mb-3 inline-flex items-center gap-2 rounded-full border border-neon/30 bg-void/50 px-4 py-1 text-xs font-semibold tracking-[0.28em] uppercase text-moon">
+            Solana Meme Cat • Green Moon Protocol
+          </p>
+          <h1 class="font-display text-5xl font-black tracking-[0.12em] title-glow sm:text-6xl lg:text-7xl">CATRANUS</h1>
+          <p class="mt-3 font-display text-xl font-bold tracking-[0.4em] text-neon drop-shadow-neon">$CATRANUS</p>
+          <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-lime/90 lg:mx-0">
+            CATRANUS brings wild feline energy to Solana, unleashing viral memes and moonbound chaos.
+          </p>
+
+          <div class="glass mt-8 rounded-2xl p-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="text-left">
+                <p class="text-[11px] uppercase tracking-[0.28em] text-moon/80">Contract Address</p>
+                <p id="ca-text" class="mt-1 break-all font-display text-sm font-bold tracking-wider text-neon">TBA</p>
+              </div>
+              <button id="copy-ca" type="button" class="moon-btn rounded-full px-5 py-2 font-display text-xs font-bold tracking-[0.2em] uppercase">
+                Copy CA
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
+            <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=TBA" target="_blank" rel="noopener noreferrer" class="neon-btn rounded-full px-8 py-3 font-display text-sm font-extrabold tracking-[0.22em] uppercase">
+              Buy Now
+            </a>
+            <a href="https://dexscreener.com/solana/TBA" target="_blank" rel="noopener noreferrer" class="moon-btn rounded-full px-8 py-3 font-display text-sm font-extrabold tracking-[0.22em] uppercase">
+              Chart
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="relative border-y border-neon/20 bg-[#04180e]/80 py-3 overflow-hidden">
+      <div class="ticker flex w-max gap-10 whitespace-nowrap font-display text-sm font-bold tracking-[0.35em] text-neon">
+        <span>CATRANUS</span><span>$CATRANUS</span><span>GREEN MOON</span><span>FELINE ENERGY</span><span>SOLANA CHAOS</span><span>TO THE MOON</span>
+        <span>CATRANUS</span><span>$CATRANUS</span><span>GREEN MOON</span><span>FELINE ENERGY</span><span>SOLANA CHAOS</span><span>TO THE MOON</span>
+      </div>
+    </div>
+
+    <section id="about" class="mx-auto max-w-7xl px-4 py-20">
+      <div class="grid items-center gap-10 lg:grid-cols-2">
+        <div>
+          <p class="font-display text-xs tracking-[0.4em] uppercase text-moon">The Cat-Moon Prophecy</p>
+          <h2 class="mt-3 font-display text-3xl font-extrabold tracking-[0.12em] text-neon drop-shadow-neon sm:text-4xl">Born under a green moon.</h2>
+          <p class="mt-6 text-lg leading-8 text-lime/85">
+            CATRANUS brings wild feline energy to Solana, unleashing viral memes and moonbound chaos.
+            A black-cat sentinel orbits an icy world, eyes burning lime, rings cutting through the void.
+            This is not a quiet coin. It is a howl across the chain — claws out, bags packed, trajectory: moon.
+          </p>
+          <div class="mt-8 grid grid-cols-3 gap-3">
+            <div class="glass rounded-2xl p-4 text-center">
+              <p class="font-display text-xl font-black text-neon">$CATRANUS</p>
+              <p class="mt-1 text-xs uppercase tracking-[0.2em] text-moon/80">Ticker</p>
+            </div>
+            <div class="glass rounded-2xl p-4 text-center">
+              <p class="font-display text-xl font-black text-moon">SOL</p>
+              <p class="mt-1 text-xs uppercase tracking-[0.2em] text-moon/80">Chain</p>
+            </div>
+            <div class="glass rounded-2xl p-4 text-center">
+              <p class="font-display text-xl font-black text-neon">∞</p>
+              <p class="mt-1 text-xs uppercase tracking-[0.2em] text-moon/80">Chaos</p>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="glass overflow-hidden rounded-3xl">
+            <img src="banner.jpg" alt="CATRANUS banner" class="w-full object-cover" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="buy" class="relative px-4 py-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 text-center">
+          <p class="font-display text-xs tracking-[0.4em] uppercase text-moon">Portal Sequence</p>
+          <h2 class="mt-3 font-display text-3xl font-extrabold tracking-[0.12em] text-neon drop-shadow-neon sm:text-5xl">How to Buy</h2>
+          <p class="mx-auto mt-4 max-w-2xl text-lg text-lime/80">Four steps. One cat. Infinite moon. Grab SOL and summon $CATRANUS.</p>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <article class="glass rounded-3xl p-6">
+            <div class="step-num mb-5 flex h-12 w-12 items-center justify-center rounded-full font-display text-xl font-black">1</div>
+            <h3 class="font-display text-lg font-extrabold tracking-wide text-neon">Summon a Wallet</h3>
+            <p class="mt-3 text-base leading-7 text-lime/80">
+              Install a Solana wallet like Phantom or Solflare. Create your vault, lock the seed, and step into the green-moon orbit.
+            </p>
+          </article>
+          <article class="glass rounded-3xl p-6">
+            <div class="step-num mb-5 flex h-12 w-12 items-center justify-center rounded-full font-display text-xl font-black">2</div>
+            <h3 class="font-display text-lg font-extrabold tracking-wide text-neon">Charge with SOL</h3>
+            <p class="mt-3 text-base leading-7 text-lime/80">
+              Buy SOL on an exchange, then send it to your wallet. SOL is the fuel that launches $CATRANUS toward the moon.
+            </p>
+          </article>
+          <article class="glass rounded-3xl p-6">
+            <div class="step-num mb-5 flex h-12 w-12 items-center justify-center rounded-full font-display text-xl font-black">3</div>
+            <h3 class="font-display text-lg font-extrabold tracking-wide text-neon">Open the Swap</h3>
+            <p class="mt-3 text-base leading-7 text-lime/80">
+              Hit <span class="text-neon font-semibold">Buy Now</span> to open Pump.fun. Connect your wallet and keep the CATRANUS CA ready.
+            </p>
+          </article>
+          <article class="glass rounded-3xl p-6">
+            <div class="step-num mb-5 flex h-12 w-12 items-center justify-center rounded-full font-display text-xl font-black">4</div>
+            <h3 class="font-display text-lg font-extrabold tracking-wide text-neon">Unleash $CATRANUS</h3>
+            <p class="mt-3 text-base leading-7 text-lime/80">
+              Swap SOL for $CATRANUS, confirm the transaction, and join the feline chaos. Eyes green. Bags heavy. Moon locked.
+            </p>
+          </article>
+        </div>
+
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=TBA" target="_blank" rel="noopener noreferrer" class="neon-btn rounded-full px-8 py-3 font-display text-sm font-extrabold tracking-[0.22em] uppercase">
+            Buy $CATRANUS
+          </a>
+          <button type="button" id="copy-ca-2" class="moon-btn rounded-full px-8 py-3 font-display text-sm font-extrabold tracking-[0.22em] uppercase">
+            Copy CA
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="chart" class="mx-auto max-w-7xl px-4 py-20">
+      <div class="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+        <div>
+          <p class="font-display text-xs tracking-[0.4em] uppercase text-moon">Live Orbit</p>
+          <h2 class="mt-3 font-display text-3xl font-extrabold tracking-[0.12em] text-neon drop-shadow-neon sm:text-4xl">Chart</h2>
+          <p class="mt-2 text-lime/80">Watch the green moon move in real time on Dexscreener.</p>
+        </div>
+        <a href="https://dexscreener.com/solana/TBA" target="_blank" rel="noopener noreferrer" class="moon-btn rounded-full px-6 py-2 font-display text-xs font-bold tracking-[0.2em] uppercase">
+          Open Dexscreener
+        </a>
+      </div>
+      <div class="glass overflow-hidden rounded-3xl p-2">
+        <iframe
+          title="CATRANUS Dexscreener chart"
+          class="h-[520px] w-full rounded-2xl"
+          src="https://dexscreener.com/solana/TBA?embed=1&loadChartSettings=0&trades=0&tabs=0&info=0&chartLeftToolbar=0&chartDefaultOnMobile=1&chartTheme=dark&theme=dark&chartStyle=0&chartType=usd&interval=15"
+        ></iframe>
+      </div>
+    </section>
+
+    <section id="community" class="px-4 pb-20">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-10 text-center">
+          <p class="font-display text-xs tracking-[0.4em] uppercase text-moon">Join the Pride</p>
+          <h2 class="mt-3 font-display text-3xl font-extrabold tracking-[0.12em] text-neon drop-shadow-neon sm:text-4xl">Community</h2>
+          <p class="mx-auto mt-4 max-w-2xl text-lg text-lime/80">
+            CATRANUS brings wild feline energy to Solana, unleashing viral memes and moonbound chaos. Rally with the pack.
+          </p>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2">
+          <a href="https://t.me/CATRANUSsol" target="_blank" rel="noopener noreferrer" class="glass group flex items-center gap-5 rounded-3xl p-6 transition hover:border-neon/60">
+            <img src="tg.png" alt="" class="h-16 w-16 rounded-full ring-2 ring-neon/40" />
+            <div>
+              <p class="font-display text-xl font-extrabold text-neon">Telegram</p>
+              <p class="text-moon">t.me/CATRANUSsol</p>
+            </div>
+          </a>
+          <a href="https://x.com/CATRANUSsol" target="_blank" rel="noopener noreferrer" class="glass group flex items-center gap-5 rounded-3xl p-6 transition hover:border-neon/60">
+            <img src="x.png" alt="" class="h-16 w-16 rounded-full object-cover ring-2 ring-neon/40" />
+            <div>
+              <p class="font-display text-xl font-extrabold text-neon">X / Twitter</p>
+              <p class="text-moon">x.com/CATRANUSsol</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="border-t border-neon/20 bg-[#03140a]/90 px-4 py-10">
+      <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
+        <div class="flex items-center gap-3">
+          <img src="logo.png" alt="" class="h-10 w-10 rounded-full logo-aura object-cover" />
+          <div>
+            <p class="font-display text-sm font-extrabold tracking-[0.25em] text-neon">CATRANUS</p>
+            <p class="text-xs tracking-[0.2em] text-moon/80">$CATRANUS on Solana</p>
+          </div>
+        </div>
+        <p class="max-w-md text-center text-sm text-lime/60 md:text-right">
+          CATRANUS is a meme experiment. Not financial advice. DYOR, watch the chart, and never fade the green-eyed cat.
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" class="pointer-events-none fixed bottom-6 left-1/2 z-[60] hidden -translate-x-1/2 rounded-full border border-neon/40 bg-[#05210c] px-5 py-2 font-display text-xs font-bold tracking-[0.2em] uppercase text-neon shadow-[0_0_24px_rgba(57,255,20,0.45)]">
+    CA copied
+  </div>
+
+  <script>
+    const CA = "TBA";
+
+    function copyCA(button) {
+      const done = () => {
+        const toast = document.getElementById("toast");
+        toast.classList.remove("hidden");
+        toast.classList.add("copy-ok");
+        if (button) {
+          const original = button.textContent;
+          button.textContent = "Copied";
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1400);
+        }
+        setTimeout(() => toast.classList.add("hidden"), 1600);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(CA).then(done).catch(() => fallbackCopy(done));
+      } else {
+        fallbackCopy(done);
+      }
+    }
+
+    function fallbackCopy(done) {
+      const field = document.createElement("textarea");
+      field.value = CA;
+      document.body.appendChild(field);
+      field.select();
+      document.execCommand("copy");
+      field.remove();
+      done();
+    }
+
+    document.getElementById("copy-ca").addEventListener("click", (e) => copyCA(e.currentTarget));
+    document.getElementById("copy-ca-2").addEventListener("click", (e) => copyCA(e.currentTarget));
+  </script>
+</body>
+</html>
